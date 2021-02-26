@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+	<title>Mentee Dashboard - 学员</title>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'menteesubmission.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.gif')}}"/>
+
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='font-awesome.min.css')}}">
+
+
+	<script src="{{url_for('static', filename='jquery-3.1.1.min.js')}}"></script>
+	<script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+	<script src="{{url_for('static', filename='jquery.chained.min.js')}}"></script>
+
+
+</head>
+<body>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+		  $("#school").chained("#essaytype");
+		});
+	</script>
+
+	<div class="header-container row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <img class="logo" src="{{url_for('static', filename = 'logo.png')}}" alt="logo.png">
+        </div>
+	</div>
+
+	<div>
+		<br>
+		<br>
+		<div class = "row">
+			<div class="col-sm-4 col-sm-offset-1 form">
+				<h2 class="pink">Essay Upload - 文书上传</h2>
+				<hr>
+				<form action = "" method = "post" enctype="multipart/form-data">
+
+					<div class="form-group">
+						<label for="essaytype">Select Essay Type - 选择文书类型</label>
+						<select required="" name="essaytype" id="essaytype" class="form-control">
+
+							<option value="">Essay Type</option>
+							<option value="PS">Personal Statement</option>
+							<option value="WhyEssay">Supplement - Why Essay</option>
+							<option value="OtherSupp">Supplement - Other</option>
+							<option value="Other">Other Documents</option>
+
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="school">Select Essay Descriptions - 选择文书介绍 (<a href="/addschool" target="view_window">添加学校</a> | <a href="/deleteschool" target="view_window">删除学校</a>) </label>
+						<select required="" name="school" id="school" class="form-control">
+
+							<option value="">Descriptions</option>
+
+							<option value="CommonApp" class="PS">CommonApp</option>
+							<option value="Non-US" class="PS">Non-US</option>
+
+							{% if schoollist %}
+							{% for school in schoollist %}
+							<option value="{{ school[0] }}" class="WhyEssay">{{ school[0] }}</option>
+							{% endfor %}
+							{% endif %}
+
+							{% if schoollist %}
+							{% for school in schoollist %}
+							<option value="{{ school[0] }}" class="OtherSupp">{{ school[0] }}</option>
+							{% endfor %}
+							{% endif %}
+
+							<option value="ActivityList" class="Other">Activity List</option>
+							<option value="Resume" class="Other">Resume</option>
+							<option value="CommonAppInfo" class="Other">CommonApp Additional Info</option>
+							<option value="CommonAppExplanation" class="Other">CommonApp Explanation</option>
+							<option value="Email" class="Other">Email</option>
+							<option value="Recommendation" class="Other">Recommendation Letter</option>
+							<option value="Paper" class="Other">Academic Paper</option>
+							<option value="LoveLetter" class="Other">Love Letter</option>
+							<option value="Others" class="Other">Others</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="mentor">Select Mentor - 选择导师</label>
+						<select required="" name="mentor" class="form-control"=>
+							<option value="">Mentor</option>
+							{% if mentorlist %}
+							{% for mentor in mentorlist %}
+							<option value="{{ mentor }}">{{ mentor }}</option>
+							{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<br>
+					<div class="form-group">
+						<label for="file">Select File - 选择上传文书</label>
+						<input type="file" name="file" id="file" data-multiple-caption="{count} files selected" multiple/>
+						<p class="help-block">Only Accept <kbd>.docx</kbd> File - 仅支持 <kbd>.docx</kbd> 文件上传</p>
+					</div>
+					<div>
+						<button class="btn btn-block">Upload 上传文书</button>
+					</div>
+				</form>
+
+				<div class="form-group">
+					<form action = "/displaymentorprofile", method = "post">
+					<label for="mentor">Select Mentor - 选择导师</label>
+					<select required="" name="mentorname" class="form-control"=>
+						<option value="">Mentor</option>
+						{% if mentorlist %}
+						{% for mentor in mentorlist %}
+						<option value="{{ mentor }}">{{ mentor }}</option>
+						{% endfor %}
+						{% endif %}
+					</select>
+					<button>Browse Mentor Profile</button>
+				</form>
+				</div>
+
+	        </div>
+
+	        <div class="col-sm-3 resource-bar">
+	        	<h2 class="pink">Resources - 资源</h2>
+				<hr>
+				<label>藏书阁 - Booklets</label>
+				<div class="row">
+					<ul>
+					  <li><strong>PS</strong> - PS葵花宝典</li>
+					  <li><strong>Why</strong> - Why Essay大全</li>
+					  <li><strong>ACList</strong> - 手把手教你搞Activity List</li>
+					  <li><strong>Interview</strong> - 一本搞定所有面试的宝典</li>
+					  <li><strong>Email</strong> - 如何不作死的给教授写一封邮件？</li>
+					</ul>
+					<p>&nbsp &nbsp <mark>持续更新ing……</mark></p>
+					<div class="col-sm-6">
+						<a href="http://www.stoooges.cn/file/booklets-mac.zip"><button class="btn btn-default btn-block"><i class="fa fa-apple fa-lg pink"></i><strong> Mac版 </strong></button></a>
+
+					</div>
+					<div class="col-sm-6 smallpadding">
+						<a href="http://www.stoooges.cn/file/booklets-win.zip"><button class="btn btn-default btn-block"><i class="fa fa-windows fa-lg pink"></i><strong> Win版 </strong></button></a>
+					</div>
+
+					<div class="col-sm-12 booklets">
+						<a href="http://www.stoooges.cn/booklets"><button class="btn btn-block">打开教程 Instructions</button></a>
+					</div>
+				</div>
+				<hr>
+				<label>CommonApp 指南 - Guide</label>
+				<div class="row">
+					<div class="col-sm-4 leftpadding">
+						<a href="http://www.stoooges.cn/booklets/CAGuide.html"><button class="btn btn-default btn-block"><strong> 填写指南 </strong></button></a>
+					</div>
+					<div class="col-sm-4 middlepadding">
+						<a href="http://www.stoooges.cn/booklets/RecGuide.html"><button class="btn btn-default btn-block"></i><strong> 推荐信指南 </strong></button></a>
+					</div>
+					<div class="col-sm-4 rightpadding">
+						<a href="http://www.stoooges.cn/booklets/CANotice.html"><button class="btn btn-default btn-block"></i><strong> 注意事项 </strong></button></a>
+					</div>
+				</div>
+				<hr>
+				{% include "adminmsg" %}
+			</div>
+
+			 <div class="col-sm-3 tool-bar">
+	        	<h2 class="pink">Tools - 工具</h2>
+				<hr>
+				<a href="/menteeprofile"> Edit Your Profile </a>
+			</br>
+				<label>文件算号器</label>
+				<div class="row">
+					<form action="/decodepdf" method = 'post'>
+							<div class="col-sm-8">
+							<input type="text" class="form-control" placeholder="Paste Machine ID here..." name="machid"/>
+							</div>
+							<button type="submit" value="submit" class="btn" target="view_window">开始解码</button>
+					</form>
+					<hr>
+				</div>
+				<label>翻墙利器 - Stoooges VPN</label>
+				<div class="row">
+					<div class="col-sm-12 booklets">
+						<a href="http://www.stoooges.com/vpn/mentee"><button class="btn btn-block">使用教程 Instructions</button></a>
+					</div>
+				</div>
+				<hr>
+				<label>语法利器 - <a href="https://www.grammarly.com">Grammarly</a></label>
+				<blockquote>
+					<strong>用户名 Username： <mark>info@stoooges.com</mark> </strong>  <br>
+					<strong>密码 Password： &nbsp &nbsp <mark>Stoooges</mark> </strong>
+				</blockquote>
+				<hr>
+				<label>咨询论坛 - <a href="https://www.cuus.info">CUUS</a></label>
+				<blockquote>
+					<strong>用户名 Username： <mark>Bank-of-CUUS</mark> </strong>  <br>
+					<strong>密码 Password： &nbsp &nbsp <mark>Stoooges2400</mark> </strong>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

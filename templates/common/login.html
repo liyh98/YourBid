@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Stoooges Login - 登录</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/login.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+		<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='plugins/images/favicon.png')}}"/>
+	</head>
+	<body>
+		<center>
+			<img src="{{url_for('static', filename = 'plugins/images/logo.png')}}" alt="logo.png">
+		</center>
+		<div class="login-page">
+			<div class="form">
+			{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}</p>
+			{% endif %}
+
+		    <form action = "" method = "post" class="login-form">
+		      <input type="text" name = "username" placeholder="Username"/>
+		      <input type="password" name = "password" placeholder="Password"/>
+		      <button>login</button>
+		      <p class="message">Forgot Password? <a href="/alteraccount">Recover Password</a></p>
+		    </form>
+		    </div>
+		</div>
+
+		<script href="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+	</body>
+</html>

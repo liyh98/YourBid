@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="margin:0px; background: #f8f8f8; ">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" type="image/png" sizes="16x16" href={{url_for('static', filename = "plugins/images/favicon.png")}}>
+    <!-- Bootstrap Core CSS -->
+    <link href={{url_for('static', filename = "bootstrap/dist/css/bootstrap.min.css")}} rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href={{url_for('static', filename = "css/style.css")}} rel="stylesheet">
+    <!-- color CSS -->
+    <link href={{url_for('static', filename = "css/colors/default.css")}} id="theme" rel="stylesheet">
+    <title>Rate Your Mentor 导师打分</title>
+</head>
+<body>
+    <div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
+      <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
+        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
+          <tbody>
+            <tr>
+              <td style="vertical-align: top; padding-bottom:30px;" align="center"><img src={{url_for('static', filename ="plugins/images/logo.png")}} width = "250" alt="home" class="logo" style="border:none" /> </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+          <tbody>
+            <tr>
+              <td style="background:#f44336; padding:20px; color:#fff; text-align:center;"> 美好提示：请在登录前给<strong>导师</strong>打个分吧！</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding: 40px; background: #fff;">
+            <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                <tbody>
+                    <form action="/mentee/mentorreview" method="post">
+                        <tr>
+                            <td>
+                                <p>请对于你的导师在<b>本半月的服务</b>进行评价。</p>
+                                <p>满分为10分，请给出1 - 10任意一个整数分：<input type="number" name="score" max="10" min="1"></p>
+                                <br>
+                                <center>
+                                    <button type="submit" class="btn btn-rounded" style="background: #1e88e5; font-size: 15px; color: #fff;">提交进入系统</button>
+                                </center>
+                            </td>
+                        </tr>
+                    </form>
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px"><br>
+          <p> 2017 &copy; Stoooges Education 三士渡教育</p>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

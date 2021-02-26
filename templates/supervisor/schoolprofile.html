@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mentee Profile </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'css/profile.css')}}">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/gidole-regular" type="text/css"/>
+  </head>
+  <body>
+    <center>
+      <div class = "titlebar">
+        <h1>Personal Profile</h1>
+      </div>
+    </center>
+    <form action = "supervisor/schoolprofile" method = "post" class = "form" id = "profileform">
+      <div class="basicinfo">
+        <label>School Name:<input type="text" name = "schoolname" value = "{{profile['schoolname']}}"></label> <br/>
+        <label>Chinese Name:<input type="text" name = "chinesename" value = "{{profile['chinesename']}}"></label> <br/>
+        <label>Abbreviation:<input type="text" name = "abbre" value = "{{profile['abbre']}}"></label> <br/> <br/>
+      </div>
+      <div class="contactinfo">
+        <div class="leftbox">
+          <label>Wechat:<input type="text" name = "wechat" value = "{{profile['wechat']}}"></label><br/><br/>
+          <label>Email:<input type="email" name = "email" value = "{{profile['email']}}"></label><br/><br/>
+        </div>
+        <div class="rightbox">
+          <label>Phone Number:<input type="tel" name = "phone" value = "{{profile['phone']}}"></label><br/><br/>
+          <label>Skype:<input type="text" name = "skype" value = "{{profile['skype']}}"></label><br/><br/>
+        </div>
+      </div>
+      <div class="educationback_ground">
+        <div class="leftbox">
+          <label>Graduate univeristy:
+            <input type="text" name="master" value = "{{profile['master']}}">
+        </div>
+        <div class="rightbox">
+          <label>Major:
+            <input type="text" name="majorGrad" value = "{{profile['majorGrad']}}"></label><br/>
+        </div>
+        <div class="leftbox">
+          <label>Undergraduate University:
+            <input type ="text" name="undergraduate" value = "{{profile['undergraduate']}}">
+        </div>
+        <div class="rightbox">
+          <label>Major:
+            <input type="text" name="majorUndergrad" value = "{{profile['majorUndergrad']}}"></label><br/>
+        </div>
+        <label>High School:
+          <input type ="text" name="highschool" value = "{{profile['highschool']}}"></label><br/><br/>
+      </div>
+      <div class="major_achievements">
+        <label>Major Achievements:<br/>
+          <textarea form = "profileform" name = "event_1" rows="3">{{profile['event_1']}}</textarea><br/><br/>
+          <textarea form = "profileform" name = "event_2" rows="3">{{profile['event_2']}}</textarea><br/><br/>
+          <textarea form = "profileform" name = "event_3" rows="3">{{profile['event_3']}}</textarea><br/><br/><br/>
+      </div>
+      <div class="admitted_university">
+        <label>All the universities that you were admitted or applied:<br/>
+          <textarea form = "profileform" name = "universities" rows="5">{{profile['universities']}}</textarea><br/><br/><br/>
+      </div>
+      <div class ="yourself">
+        <label>About myself:<br/>
+          <textarea form = "profileform" name = "yourself" rows="8">{{profile['yourself']}}</textarea><br/><br/><br/>
+      </div>
+      <button>submit</button>
+    </form>
+  </body>
+</html>

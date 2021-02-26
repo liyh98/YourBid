@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+	<title>Change Password - 修改密码</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.gif')}}"/>
+</head>
+<body>
+	<center>
+			<img src="{{url_for('static', filename = 'logo.png')}}" alt="logo.png">
+	</center>
+	<div class="login-page">
+	{% if notmatch %}
+	Passwords do not match!
+	{% endif %}
+		<div class="form">
+		<form action = "/changepwd" method = 'post' class="login-form">
+				<label>New Password - 新密码</label>
+				<input type="password" name="password1">
+				<label>Re-type Password - 再次输入</label>
+				<input type="password" name="password2">
+				<button type="submit" value="Reset Password">重置密码</button>
+		</form>
+		</div>
+	</div>
+	<script href="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+</body>
+</html>

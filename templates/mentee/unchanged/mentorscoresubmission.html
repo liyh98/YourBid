@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title>Consulting Review - 学员咨询打分</title>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'menteepresubmission.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.gif')}}"/>
+</head>
+<body>
+	<div class="header-container row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <img class="logo" src="{{url_for('static', filename = 'logo.png')}}" alt="logo.png">
+        </div>
+        <div class="col-sm-1 col-sm-offset-3">
+        	<a href="/mentee"><button class="btn">Back 返回</button></a>
+        </div>
+	</div>
+
+	<form action="" method="post">
+	<table class = "table table-hover">
+	<thead>
+		<tr>
+			<th>导师</th>
+			<th>时间段</th>
+			<th>打分</th>
+
+		</tr>
+	</thead>
+	<tbody>
+	{% for mentor in mentorlist %}
+		<tr>
+			<th>{{mentor}}</th>
+			<th>{{startdate}}至{{enddate}}</th>
+			<th><input type = "number", name = "{{mentor+'Score'}}"></th>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+	<button>Submit</button>
+	</form>
+	<script href="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+</body>
+</html>

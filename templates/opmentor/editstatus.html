@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Ares">
+    <title>{{menteecname}}的申请信息</title>
+    <link rel="icon" type="image/png" sizes="16x16" href={{url_for('static', filename = "plugins/images/favicon.png")}}>
+
+   
+    <!-- Bootstrap Core CSS -->
+    <link href={{url_for('static', filename = "bootstrap/dist/css/bootstrap.min.css")}} rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css")}} rel="stylesheet">
+    <!-- toast CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/toast-master/css/jquery.toast.css")}} rel="stylesheet">
+    <!-- morris CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/morrisjs/morris.css")}} rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/chartist-js/dist/chartist.min.css")}} rel="stylesheet">
+    <link href={{url_for('static', filename = "plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css")}} rel="stylesheet">
+    <!-- animation CSS -->
+    <link href={{url_for('static', filename = "css/animate.css")}} rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href={{url_for('static', filename = "css/style.css")}} rel="stylesheet">
+    <!-- color CSS -->
+    <link href={{url_for('static', filename = "css/colors/default.css")}} id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="/mentor/dashboard">
+                        <!-- Logo icon image, you can use font-icon also --><b>
+                        <!--This is dark logo icon--><img src={{url_for('static', filename ="plugins/images/logo.png")}} width = "130" alt="home" class="logo" />
+                     </b>
+                         </a>
+                </div>
+                <!-- /Logo -->
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                    <li>
+                        <a class="profile-pic" href="#"> <img src={{url_for('static', filename = "plugins/images/users.png")}} alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ session['username'] }}</b></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav slimscrollsidebar">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">信息总览</span></h3>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li style="padding: 70px 0 0;">
+                        <a href="/opmentor/dashboard" class="waves-effect"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>信息总览</a>
+                    </li>
+                    {% if menteelist %}
+                    {% for mentee in menteelist %}
+                    <li>
+                        <a href="/opmentor/viewmentee?mentee={{mentee['mentee']}}" class="waves-effect"><i class="fa fa-list-ul fa-fw" aria-hidden="true"></i>{{mentee['menteecname']}}</a>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">{{menteecname}}</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="#">{{menteecname}}的申请信息</a></li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-inverse">
+                            <div class="panel-heading"> 更新进度 </div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="/opmentor/editstatus?mentee={{menteename}}" method = "post">
+                                        <div class="form-body">
+
+                                            <h3 class="box-title"><strong>葵花宝典学习</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">葵花宝典打开</label>
+                                                        <div class="col-md-9">
+                                                            <input class="form-control" value=" {{checklist['psbookletopen']}}" name = 'psbookletopen'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>头脑风暴</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">BS表格发送</label>
+                                                        <div class="col-md-9">
+                                                            <input class="form-control" value=" {{checklist['bsform']}}" name = 'bsform'>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">进行头脑风暴</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['bsmentor']}} " name = 'bsmentor'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Outline</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['psoutline']}} " name = 'psoutline'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">学术总监审核</label>
+                                                        <div class="col-md-9">
+                                                            
+
+                                                            <input class="form-control" value=" {{checklist['outlinecheck']}}  " name = 'outlinecheck'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">审核导师发Outline</label>
+                                                        <div class="col-md-9">
+                                                            <input class="form-control" value=" {{checklist['outlinesent']}} " name = 'outlinesent'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+
+                                            <h3 class="box-title"><strong>PS 主文书</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Draft</label>
+                                                        <div class="col-md-9">
+                                                            <input class="form-control" value=" {{checklist['psdraft']}}" name = 'psdraft'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Final Draft</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['psfinaldraft']}} " name = 'psfinaldraft'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS总监审核</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['pscheck']}} " name = 'pscheck'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS发送美方导师</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['pssentusmentor']}} " name = 'pssentusmentor'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Grammarly检查</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['psgrammarly']}} " name = 'psgrammarly'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>选校</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">学术总监选校</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['chooseschool']}} " name = 'chooseschool'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['chooseschoolmanual']}} " name = 'chooseschoolmanual'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>AC List 活动列表</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['aclistmanualsent']}} " name = 'aclistmanualsent'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Brainstorm活动列表</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['aclistbrainstorm']}} " name = 'aclistbrainstorm'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Raw AC List</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['rawaclist']}} " name = 'rawaclist'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">AC List最终版</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['finalaclist']}} " name = 'finalaclist'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div> 
+
+                                            <h3 class="box-title"><strong>Why Essay</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['whymanual']}} " name = 'whymanual'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">往届Supp合集</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['suppexample']}} " name = 'suppexample'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>CA填写</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">申请表格填写</label>
+                                                        <div class="col-md-9">
+                                                        
+                                                            <input class="form-control" value=" {{checklist['cafile']}} " name = 'cafile'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">推荐信上传</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['recom']}} " name = 'recom'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">面试预约</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['interview']}} " name = 'interview'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">财产证明</label>
+                                                        <div class="col-md-9">
+                                                           
+                                                            <input class="form-control" value=" {{checklist['moneycert']}} " name = 'moneycert'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>提交材料</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">标化分数提交</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['testsent']}} " name = 'testsent'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">成绩单提交</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['gpasent']}} " name = 'gpasent'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">财产证明提交</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['moneycertsent']}} " name = 'moneycertsent'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>Preview 预览审核</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">行政审核</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['oppreview']}} " name = 'oppreview'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">终审审核</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['headpreview']}} " name = 'headpreview'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">总监审核</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['finalpreview']}} " name = 'finalpreview'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <h3 class="box-title"><strong>后续</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">提醒检查Portal</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['checkportal']}} " name = 'checkportal'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">反馈录取结果</label>
+                                                        <div class="col-md-9">
+                                                            
+                                                            <input class="form-control" value=" {{checklist['reportresult']}} " name = 'reportresult'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Submit 修改</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                <!--./row-->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2017 &copy; Stoooges Education 三士渡教育 </footer>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src={{url_for('static', filename = "plugins/bower_components/jquery/dist/jquery.min.js")}}></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src={{url_for('static', filename = "bootstrap/dist/js/bootstrap.min.js")}}></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src={{url_for('static', filename = "plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js")}}></script>
+    <!--slimscroll JavaScript -->
+    <script src={{url_for('static', filename = "js/jquery.slimscroll.js")}}></script>
+    <!--Wave Effects -->
+    <script src={{url_for('static', filename = "js/waves.js")}}></script>
+    <!--Counter js -->
+    <script src={{url_for('static', filename = "plugins/bower_components/waypoints/lib/jquery.waypoints.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/counterup/jquery.counterup.min.js")}}></script>
+    <!-- chartist chart -->
+    <script src={{url_for('static', filename = "plugins/bower_components/chartist-js/dist/chartist.min.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js")}}></script>
+    <!-- Sparkline chart JavaScript -->
+    <script src={{url_for('static', filename = "plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js")}}></script>
+    <!-- Custom Theme JavaScript -->
+    <script src={{url_for('static', filename = "js/custom.min.js")}}></script>
+    <script src={{url_for('static', filename = "js/dashboard1.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/toast-master/js/jquery.toast.js")}}></script>
+</body>
+
+</html>
+
+
+

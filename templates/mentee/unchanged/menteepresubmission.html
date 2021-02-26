@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<title>Consulting Review - 学员咨询打分</title>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'menteepresubmission.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.gif')}}"/>
+</head>
+<body>
+	<div class="header-container row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <img class="logo" src="{{url_for('static', filename = 'logo.png')}}" alt="logo.png">
+        </div>
+        <div class="col-sm-1 col-sm-offset-3">
+        	<a href="/mentee"><button class="btn">Back 返回</button></a>
+        </div>
+	</div>
+
+	{% if mentorupdates %}
+	{% for mentorupdate in mentorupdates %}
+	<br>
+	<br>
+	<div class = "row">
+		<div class = "presubmission col-sm-10 col-sm-offset-1"> 
+			<h2 class="pink">Consulting Review - 咨询打分</h2>
+			<hr>
+			<br>
+			<form action = "/mentorhourconfirmation" method = "post">
+				<div class = "table-title">
+					<h4 class="text-center">对 {{mentorupdate[1]}} 咨询的评价</h4>
+					<hr>
+				</div>
+				<table class = "table table-hover">
+					<thead>
+						<tr>
+							<th class="col-sm-1 col-xs-1 text-center consult">Consult 咨询用时</th>
+							<th class="col-sm-1 col-xs-1 text-center consult">Others 其他时间</th>
+							<th class="col-sm-4 col-xs-4">Comment 评价</th>
+							<th>Date 日期</th>
+							<th class="text-left">Review 打分   </th>
+						</tr>
+					</thead>
+					{% for update in mentorupdate[0] %}
+					<tbody>
+						<tr>
+							<td class="text-center">{{update[0]}}</td>
+							<td class="text-center">{{update[1]}}</td>
+							<td>{{update[2]}}</td>
+							<td>{{update[3]}}</td>
+							<td>
+								<label class="radio-inline">
+									<input type = "radio" name = {{update[4]}} value = "3" checked> 聊得很开心 
+								</label>
+								<label class="radio-inline">
+									<input type = "radio" name = {{update[4]}} value = "2"> 聊得不错 
+								</label>
+								<label class="radio-inline">
+									<input type = "radio" name = {{update[4]}} value = "1"> 有待提高
+								</label>
+							</td>
+						</tr>
+					</tbody>
+					{% endfor %}
+				</table>
+				<div class="btn col-sm-2 col-sm-offset-5">
+					<br>
+					<button>Submit 提交</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<script href="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+</body>
+</html>

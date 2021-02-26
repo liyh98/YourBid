@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Essay Review - 学员批改打分<</title>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'menteepostsubmission.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+	<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.gif')}}">
+</head>
+<body>
+	<div class="header-container row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <img class="logo" src="{{url_for('static', filename = 'logo.png')}}" alt="logo.png">
+        </div>
+        <div class="col-sm-1 col-sm-offset-3">
+        	<a href="/mentee"><button class="btn">Back 返回</button></a>
+        </div>
+	</div>
+	<br>
+	<br>
+	<div class="row">
+	{% if mentorupdate %}
+		<h2>Mentor Edited Essay</h2></br>
+		<table>
+			<thead>
+				<tr>
+					<th>Filename</th>
+					<th>Time Uploaded</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for entry in mentorupdate %}
+				<tr>
+					<th><a href="{{url_for('mentorPages.static', filename = mentor+'/'+mentee+'/'+entry[1]+'.docx')}}">{{entry[1]}}</a></th>
+					<th>{{entry[0]}}</th>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+	</div>
+	<script href="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+</body>
+</html>

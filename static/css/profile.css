@@ -1,0 +1,91 @@
+.titlebar {
+  color: #FFFFFF;
+  background-color: #1E90FF;
+  margin: 0 auto;
+  width: 50%;
+  padding: 45px;
+  font-family: GidoleRegular;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form textarea {
+  width: 97%;
+  resize: none;
+  border-color: #87CEFA;
+  border-width: 2px;
+  font-size: 18px;
+  color: #454545;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 0px;
+  padding-bottom: 5px;
+}
+
+.form {
+  text-transform: uppercase;
+  color: #696969;
+  font-family: GidoleRegular;
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  margin: 0 auto;
+  width: 50%;
+  padding: 45px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.leftbox {
+  float: left;
+  width: 45%;
+  padding-right: 5%;
+}
+
+.rightbox {
+  float: right;
+  width: 45%;
+  padding-left: 5%;
+}
+
+.form input {
+  outline: 0;
+  width: 100%;
+  border-style: solid;
+  border-color: #87CEFA;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin: 0 0 15px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 0px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #454545;
+}
+
+.form button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #87CEFA;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+
+.form button:hover,
+.form button:active,
+.form button:focus {
+  background: #1E90FF;
+
+}
+
+body {
+  background-color: #DCDCDC;
+}

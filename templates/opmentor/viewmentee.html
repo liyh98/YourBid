@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Ares">
+    <title>{{menteecname}}的申请信息</title>
+    <link rel="icon" type="image/png" sizes="16x16" href={{url_for('static', filename = "plugins/images/favicon.png")}}>
+
+   
+    <!-- Bootstrap Core CSS -->
+    <link href={{url_for('static', filename = "bootstrap/dist/css/bootstrap.min.css")}} rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css")}} rel="stylesheet">
+    <!-- toast CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/toast-master/css/jquery.toast.css")}} rel="stylesheet">
+    <!-- morris CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/morrisjs/morris.css")}} rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href={{url_for('static', filename = "plugins/bower_components/chartist-js/dist/chartist.min.css")}} rel="stylesheet">
+    <link href={{url_for('static', filename = "plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css")}} rel="stylesheet">
+    <!-- animation CSS -->
+    <link href={{url_for('static', filename = "css/animate.css")}} rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href={{url_for('static', filename = "css/style.css")}} rel="stylesheet">
+    <!-- color CSS -->
+    <link href={{url_for('static', filename = "css/colors/default.css")}} id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="/mentor/dashboard">
+                        <!-- Logo icon image, you can use font-icon also --><b>
+                        <!--This is dark logo icon--><img src={{url_for('static', filename ="plugins/images/logo.png")}} width = "130" alt="home" class="logo" />
+                     </b>
+                         </a>
+                </div>
+                <!-- /Logo -->
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                    <li>
+                        <a class="profile-pic" href="#"> <img src={{url_for('static', filename = "plugins/images/users.png")}} alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ session['username'] }}</b></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav slimscrollsidebar">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">信息总览</span></h3>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li style="padding: 70px 0 0;">
+                        <a href="/opmentor/dashboard" class="waves-effect"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>信息总览</a>
+                    </li>
+                    {% if menteelist %}
+                    {% for mentee in menteelist %}
+                    <li>
+                        <a href="/opmentor/viewmentee?mentee={{mentee['mentee']}}" class="waves-effect"><i class="fa fa-list-ul fa-fw" aria-hidden="true"></i>{{mentee['menteecname']}}</a>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">{{menteecname}}</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="#">{{menteecname}}的申请信息</a></li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+
+                 <!-- .row -->
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">学员文书</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">N/A</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">家长汇报</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash2"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-purple">N/A</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">导师汇报</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash3"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">N/A</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--/.row -->
+
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel panel-inverse">
+                            <div class="panel-heading"> 进度检查表 <a href="/opmentor/editstatus?mentee={{menteename}}"> (更新)</a> </div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+
+                                            <h3 class="box-title"><strong>葵花宝典学习</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">葵花宝典打开</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['psbookletopen']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>头脑风暴</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">BS表格发送</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['bsform']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">进行头脑风暴</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['bsmentor']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Outline</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['psoutline']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">学术总监审核</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['outlinecheck']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">审核导师发Outline</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['outlinesent']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+
+                                            <h3 class="box-title"><strong>PS 主文书</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Draft</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['psdraft']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS Final Draft</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['psfinaldraft']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS总监审核</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['pscheck']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">PS发送美方导师</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['pssentusmentor']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Grammarly检查</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['psgrammarly']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>选校</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">学术总监选校</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['chooseschool']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['chooseschoolmanual']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>AC List 活动列表</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['aclistmanualsent']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Brainstorm活动列表</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['aclistbrainstorm']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Raw AC List</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['rawaclist']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">AC List最终版</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['finalaclist']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div> 
+
+                                            <h3 class="box-title"><strong>Why Essay</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">发送指导文件</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['whymanual']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">往届Supp合集</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['suppexample']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>CA填写</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">申请表格填写</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['cafile']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">推荐信上传</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['recom']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">面试预约</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['interview']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">财产证明</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['moneycert']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>提交材料</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">标化分数提交</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['testsent']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">成绩单提交</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['gpasent']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">财产证明提交</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['moneycertsent']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+                                            <h3 class="box-title"><strong>Preview 预览审核</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">行政审核</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['oppreview']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">终审审核</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['headpreview']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">总监审核</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['finalpreview']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <h3 class="box-title"><strong>后续</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">提醒检查Portal</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['checkportal']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">反馈录取结果</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{checklist['reportresult']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="panel panel-inverse">
+                            <div class="panel-heading"> To-do <a href="/opmentor/todolist?mentee={{menteename}}"> (更新)</a></div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+
+                                    <ul class="feeds">
+                                    {% if todolist %}
+                                    {% for todo in todolist %}
+                                        <li>
+                                            <div class="bg-info"><i class="fa fa-bell-o text-white"></i></div> {{todo['detail']}} <span class="text-muted">{{todo['deadline']}}</span></li>
+                                    {% endfor %}
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-inverse">
+                            <div class="panel-heading"> 学员信息 </div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            <h3 class="box-title"><strong>基本信息</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">微信</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['wechat']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">昵称</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['nickname']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">邮箱</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['email']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">高中</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['highschool']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <h3 class="box-title"><strong>标化成绩</strong></h3>
+                                            <hr class="m-t-0 m-b-40">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">SAT</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['SAT']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">TOEFL</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"> {{profile['TOEFL']}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="sk-chat-widgets">
+                                <div class="panel panel-inverse">
+                                    <div class="panel-heading">
+                                        导师列表
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="chatonline">
+                                            <li>
+                                            	<div class="call-chat">
+                                                    <button class="btn btn-info btn-circle disabled" type="button"><i class="fa fa-comments-o"></i></button>
+                                                </div>
+                                                <a href=""><img src={{url_for('static', filename = "plugins/images/users.png")}} alt="user-img" class="img-circle"> <span>{{mentors['mentorcname']}}<small class="text-success">主导师</small></span></a>
+                                            </li>
+                                            <li>
+                                            	<div class="call-chat">
+                                                    <button class="btn btn-info btn-circle disabled" type="button"><i class="fa fa-comments-o"></i></button>
+                                                </div>
+                                                <a href=""><img src={{url_for('static', filename = "plugins/images/users.png")}} alt="user-img" class="img-circle"> <span>{{mentors['headmentorcname']}}<small class="text-danger">终审导师</small></span></a>
+                                            </li>
+                                            <li>
+                                            	<div class="call-chat">
+                                                    <button class="btn btn-info btn-circle disabled" type="button"><i class="fa fa-comments-o"></i></button>
+                                                </div>
+                                                <a href=""><img src={{url_for('static', filename = "plugins/images/users.png")}} alt="user-img" class="img-circle"> <span>{{mentors['usmentorcname']}}<small class="text-warning">美方导师</small></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--./row-->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2017 &copy; Stoooges Education 三士渡教育 </footer>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src={{url_for('static', filename = "plugins/bower_components/jquery/dist/jquery.min.js")}}></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src={{url_for('static', filename = "bootstrap/dist/js/bootstrap.min.js")}}></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src={{url_for('static', filename = "plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js")}}></script>
+    <!--slimscroll JavaScript -->
+    <script src={{url_for('static', filename = "js/jquery.slimscroll.js")}}></script>
+    <!--Wave Effects -->
+    <script src={{url_for('static', filename = "js/waves.js")}}></script>
+    <!--Counter js -->
+    <script src={{url_for('static', filename = "plugins/bower_components/waypoints/lib/jquery.waypoints.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/counterup/jquery.counterup.min.js")}}></script>
+    <!-- chartist chart -->
+    <script src={{url_for('static', filename = "plugins/bower_components/chartist-js/dist/chartist.min.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js")}}></script>
+    <!-- Sparkline chart JavaScript -->
+    <script src={{url_for('static', filename = "plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js")}}></script>
+    <!-- Custom Theme JavaScript -->
+    <script src={{url_for('static', filename = "js/custom.min.js")}}></script>
+    <script src={{url_for('static', filename = "js/dashboard1.js")}}></script>
+    <script src={{url_for('static', filename = "plugins/bower_components/toast-master/js/jquery.toast.js")}}></script>
+</body>
+
+</html>
+
+
+
