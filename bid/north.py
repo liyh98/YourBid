@@ -1,6 +1,7 @@
 import flask
 import json
 from .dealer import *
+import time
 
 
 northPages = flask.Blueprint('northPages', __name__, template_folder='../templates')
@@ -19,6 +20,7 @@ def deal():
     if flask.request.method == "GET":
         vul_table = ['None', 'NS', 'EW', 'Both']
         dealer_table = ['W', 'N']
+        random.seed(time.time())
         game = Game(vul_table[random.randint(0, 3)], dealer_table[random.randint(0, 1)])
         with open('./hands/' + str(game.hash) + '.json', 'w') as f:
             json.dump(game.toJson(), f)

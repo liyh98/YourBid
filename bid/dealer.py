@@ -1,5 +1,5 @@
 import random
-
+import time
 
 class Card:
     def __init__(self, suit, number):
@@ -131,6 +131,7 @@ def get_hash(s):
 
 def dealer():
     s = [x for x in range(52)]
+    random.seed(time.time())
     random.shuffle(s)
     hash = get_hash(s)
     cards = list(map(Card.fromNumber, s))  ## transform numbers to cards
