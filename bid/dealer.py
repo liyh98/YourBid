@@ -148,15 +148,16 @@ class Game():
             self.bids.append('-')
         self.vul = vul
         self.dealer = _dealer
-        self.hash, e, s, w, n = dealer()
-        for card in e:
-            self.pe.addCard(card)
-        for card in s:
-            self.ps.addCard(card)
-        for card in w:
-            self.pw.addCard(card)
-        for card in n:
-            self.pn.addCard(card)
+        while self.ps.hcp + self.pn.hcp < 16:
+            self.hash, e, s, w, n = dealer()
+            for card in e:
+                self.pe.addCard(card)
+            for card in s:
+                self.ps.addCard(card)
+            for card in w:
+                self.pw.addCard(card)
+            for card in n:
+                self.pn.addCard(card)
 
     def toJson(self):
         return {
