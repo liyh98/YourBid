@@ -15,7 +15,7 @@ def bid():
         flask.session['player'] = player
         hand = None
         l = len(game.bids)
-        if (l > 1 and game.bids[l - 1] == "P" and game.bids[l - 2] == "P"):
+        if l > 1 and game.bids[l - 1] == "P":
             hand = game.pn.display() + game.ps.display() + ['Vul: ' + game.vul, 'Dealer: ' + game.dealer]
         elif player == 'south':
             hand = game.ps.display() + ['Vul: ' + game.vul, 'Dealer: ' + game.dealer]
@@ -35,7 +35,7 @@ def bid():
             print(hand['hash'], hash)
             if str(hand['hash']) == str(hash):
                 print("found!!")
-                if str(bid) == "P" and len(game.bids) > 0 and game.bids[len(game.bids) - 1] == "P":
+                if str(bid) == "P" and ((len(game.bids) > 1 and game.bids[0] != '-') or len(game.bids) > 2):
                     hand['status'] = "closed"
                 elif player == "north":
                     hand['status'] = "south"
