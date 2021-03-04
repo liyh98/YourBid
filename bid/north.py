@@ -17,7 +17,9 @@ def index():
 @northPages.route("/deal", methods=['POST', 'GET'])
 def deal():
     if flask.request.method == "GET":
-        game = Game("None")
+        vul_table = ['None', 'NS', 'EW', 'Both']
+        dealer_table = ['W', 'N']
+        game = Game(vul_table[random.randint(0, 3)], dealer_table[random.randint(0, 1)])
         with open('./hands/' + str(game.hash) + '.json', 'w') as f:
             json.dump(game.toJson(), f)
         hand = {"hash": game.hash, "status": "north"}

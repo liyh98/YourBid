@@ -7,7 +7,7 @@ commonPages = flask.Blueprint('commonPages', __name__, template_folder='../templ
 @commonPages.route("/bid", methods=['POST', 'GET'])
 def bid():
     if flask.request.method == 'GET':
-        game = Game("None")
+        game = Game("None", "None")
         flask.session['hash'] = flask.request.args['hash']
         with open('./hands/' + str(flask.request.args['hash']) + '.json', 'r') as f:
             game.fromJson(json.load(f))
@@ -16,17 +16,17 @@ def bid():
         hand = None
         l = len(game.bids)
         if (l > 1 and game.bids[l - 1] == "P" and game.bids[l - 2] == "P"):
-            hand = game.pn.display() + game.ps.display()
+            hand = game.pn.display() + game.ps.display() + ['Vul: ' + game.vul, 'Dealer: ' + game.dealer]
         elif player == 'south':
-            hand = game.ps.display()
+            hand = game.ps.display() + ['Vul: ' + game.vul, 'Dealer: ' + game.dealer]
         else:
-            hand = game.pn.display()
+            hand = game.pn.display() + ['Vul: ' + game.vul, 'Dealer: ' + game.dealer]
         return flask.render_template("bid.html", game=game, player=player, hand=hand, bids=game.bids)
     if flask.request.method == 'POST':
         hash = flask.session['hash']
         bid = flask.request.form.get('thisbid')
         player = flask.session['player']
-        game = Game("None")
+        game = Game("None", "None")
         with open('./hands/' + str(hash) + '.json', 'r') as f:
             game.fromJson(json.load(f))
         with open('./hands.json', 'r') as f:

@@ -139,11 +139,12 @@ def dealer():
 
 
 class Game():
-    def __init__(self, vul):
+    def __init__(self, vul, _dealer):
         self.pe, self.ps = Player("None", "East"), Player("None", "South")
         self.pw, self.pn = Player("None", "West"), Player("None", "North")
         self.bids = []
         self.vul = vul
+        self.dealer = _dealer
         self.hash, e, s, w, n = dealer()
         for card in e:
             self.pe.addCard(card)
@@ -163,6 +164,7 @@ class Game():
             'pn': self.pn.toJson(),
             'bids': self.bids,
             'vul': self.vul,
+            'dealer': self.dealer,
         }
 
     def fromJson(self, json):
@@ -173,6 +175,7 @@ class Game():
         self.pn.fromJson(json['pn'])
         self.bids = json['bids']
         self.vul = json['vul']
+        self.dealer = json['dealer']
 
     def display(self):
         self.pe.display()
