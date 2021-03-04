@@ -143,7 +143,7 @@ class Game():
         self.pe, self.ps = Player("None", "East"), Player("None", "South")
         self.pw, self.pn = Player("None", "West"), Player("None", "North")
         self.bids = []
-        if _dealer == 'E' or _dealer == 'W':
+        if _dealer == 'E' or _dealer == 'S':
             self.bids.append('-')
         self.vul = vul
         self.dealer = _dealer
