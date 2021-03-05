@@ -35,7 +35,7 @@ def bid():
             print(hand['hash'], hash)
             if str(hand['hash']) == str(hash):
                 print("found!!")
-                if str(bid) == "P" and ((len(game.bids) > 1 and game.bids[0] != '-') or len(game.bids) > 2):
+                if str(bid) == "P" and ((len(game.bids) > 0 and game.bids[0] != '-') or len(game.bids) > 1):
                     hand['status'] = "closed"
                 elif player == "north":
                     hand['status'] = "south"
